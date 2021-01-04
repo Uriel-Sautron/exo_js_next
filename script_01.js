@@ -28,34 +28,48 @@ const name = array => {
         tmp["last"] = user.last
         a.push(tmp)
     });
+    console.log("Les prénoms et noms des entrepreneurs:");
     return a
 };
 console.log(name(entrepreneurs));
 
+
 //Age
 const age = array => {
-    const arrayAge = array.map(user => {
-        user.age = new Date().getFullYear() - user.year;
-        delete user.year;
-        return user;
+    const arrayAge = []
+    array.map(user => {
+        const tmp = {}
+        tmp["first"] = user.first
+        tmp["last"] = user.last
+        tmp["age"] = new Date().getFullYear() - user.year
+        arrayAge.push(tmp)
     });
+    console.log("Les entrepreneurs et leurs âges: ")
     return arrayAge;
 };
 console.log(age(entrepreneurs));
+
+
 //Change Keys
 const keys = array => {
-    const arrayKeys = array.map(user => {
-        user.firstName = user.first;
-        user.lastName = user.last;
-        delete user.first;
-        delete user.last;
-        return user;
+    const arrayKeys = []
+    array.map(user => {
+        const tmp = {}
+        tmp["firstName"] = user.first
+        tmp["lastName"] = user.last
+        tmp["year"] = user.year
+        arrayKeys.push(tmp)
     });
+    console.log("Les clefs first et last modifiées:")
     return arrayKeys;
 };
+console.log(keys(entrepreneurs));
+
 
 //Filter
 const seventy = array => {
     const arraySeventy = array.filter(user => 1969 < user.year && user.year < 1980);
+    console.log("Les entrepreneurs nés dans les années 70:")
     return arraySeventy;
 };
+console.log(seventy(entrepreneurs));
