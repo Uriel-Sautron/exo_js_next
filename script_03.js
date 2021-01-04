@@ -6202,32 +6202,39 @@ const users = [
 
 // Quel est le chiffre d'affaires moyen par utilisateur ?
 const average = array => (array.reduce((a, b) => a + b.revenue, 0) / 100) / array.length;
-
+console.log(`Le chiffre d'affaires moyen d'un utilisateur ${average(users).toFixed(2)}€`)
 
 // Quel est le pourcentage d'utilisateurs ayant rapporté de l'argent (revenue supérieur à 0) ?
 const positiveTurnover = array => {
     let turnover = array.filter(user => user.revenue > 0);
-    return `${Math.round((turnover.length * 100) / array.length)} % des Utilisateurs ont un revenue suppérieur à 0`;
+    return Math.round((turnover.length * 100) / array.length)
 };
-
+console.log(`Le pourcentage d' utilisateur ayant rapporté de l'argent ${positiveTurnover(users)}%`)
 
 // Parmi les utilisateurs ayant rapporté de l'argent, quel est le chiffre d'affaires moyen d'un utilisateur ?
 const averagePositiveTurnover = array => {
     let arrayTurnover = array.filter(user => user.revenue > 0);
     let totalTurnover = arrayTurnover.reduce((a, b) => a + b.revenue, 0) / 100;
-    return totalTurnover / arrayTurnover.length;
-}
+    return (totalTurnover / arrayTurnover.length).toFixed(2);
+};
+console.log(`Le chiffre d'affaires moyen d'un utilisateur ayant rapporté de l'argent ${averagePositiveTurnover(users)}€`)
 
 
 // Combien avons-nous gagné d'argent au total ?
 const total = array => (array.reduce((a, b) => a + b.revenue, 0) / 100);
+console.log(`Nous avons gagné ${total(users)}€ au total`);
 
 
 // Combien avons-nous d'utilisateurs en France ?
-const frenchUser = array => array.filter(user => user.country === "France").length;
-
+function frenchUsers(array) {
+    return array.filter(user => user.country === "France").length;
+};
+console.log(`Nous avons ${frenchUsers(users)} en France`)
 
 // Parmi ces utilisateurs, combien avons-nous de clients payants en France ?
+const frenchCustomer = array => array.filter(user => user.country === "France" && user.revenue !== 0).length;
+console.log(`Nous avons ${frenchCustomer(users)} clients qui payent en France`)
+
 
 // Donne-moi le chiffre d'affaires réparti dans nos 4 pays les plus représentés (Allemagne, États-Unis, France, Grande-Bretagne) (chiffre d'affaires total, en France, aux États-Unis, etc.)
 const turnoverCountry = array => {
@@ -6238,7 +6245,39 @@ const turnoverCountry = array => {
     return `Chiffre d'affaires Allemage: ${germany}€, France: ${french}€, États-Unis: ${unitedStates}€ et Grande-Bretagne: ${greatBritain}€`;
 };
 // Fais-moi la liste de tous les pays dans lesquels nous avons gagné de l'argent ?
+const contryPositiveTurnover = array => {
+    const contry = array.filter(user => user.revenue !== 0)
+    return Array.from(new Set(contry.map(user => user.country).sort()))
+};
+console.log(`Listes de pays dans lesquels nous avons gagné de l'argent: ${contryPositiveTurnover(users)}`);
+
+
 // Quels sont nos 5 utilisateurs qui nous ont rapporté le plus d'agent ?
+const userMoreCurrency = array => {
+    const arraySort = array.sort((a, b) => b.revenue - a.revenue).slice(0, 5)
+    return arraySort.map(user => user.firstName + " " + user.lastName)
+}
+console.log(`Nos 5 utilisateurs qui nous ont rapporté le plus d'agent sont: ${userMoreCurrency(users)}`);
+
+
 // Gagnons-nous plus d'argent auprès des hommes ou des femmes ?
+const gender = array => {
+    const men = array.filter(user => user.sex === "M")
+    const women = array.filter(user => user.sex === "F")
+    const averageMen = men.reduce((a, b) => a + b.revenue) / men.length
+    const averageWomen = women.reduce((a, b) => a + b.revenue) / women.length
+    return averageMen > averageWomen ? "Homme" : "Femme"
+}
+console.log(`C'est les ${gender(users)} qui nous font gagner plus d'argent`);
+
+
 // Sors-moi les utilisateurs ayant rapporté au moins 75€
+const richUser = array => array.filter(user => user.revenue >= 7500).map(user => user.firstName + " " + user.lastName);
+console.log(richUser(users));
+
+
 // Parmi nos 100 premiers utilisateurs, quel est le pourcentage qui sont des clients payants ?
+const hundredUsers = array => {
+    return array.filter(user => user.id <= 100 && user.revenue !== 0).length
+};
+console.log(`Parmi nos 100 premiers utilisateurs, ${hundredUsers(users)}% sont des clients payants`)
