@@ -19,54 +19,43 @@ const entrepreneurs = [
     { first: 'Peter', last: 'Thiel', year: 1967 }
 ];
 
-//Name
-const name = array => {
-    const a = []
-    array.map(user => {
-        const tmp = {}
-        tmp["first"] = user.first
-        tmp["last"] = user.last
-        a.push(tmp)
-    });
+// Sors un array qui ne contient que le prénom & nom des entrepreneurs
+const firstNameLastName = array => {
+    const firstLast = array.map(user => ({ first: user.first, last: user.last }));
     console.log("Les prénoms et noms des entrepreneurs:");
-    return a
+    return firstLast
 };
-console.log(name(entrepreneurs));
+console.log(firstNameLastName(entrepreneurs));
 
 
-//Age
+//Pour chaque entrepreneur, remplace la date de naissance par l'âge de l'entrepreneur qu'il aurait aujourd'hui
 const age = array => {
-    const arrayAge = []
-    array.map(user => {
-        const tmp = {}
-        tmp["first"] = user.first
-        tmp["last"] = user.last
-        tmp["age"] = new Date().getFullYear() - user.year
-        arrayAge.push(tmp)
-    });
+    const ageToday = array.map(user => ({
+        first: user.first,
+        last: user.last,
+        age: new Date().getFullYear() - user.year
+    }));
     console.log("Les entrepreneurs et leurs âges: ")
-    return arrayAge;
+    return ageToday;
 };
 console.log(age(entrepreneurs));
 
 
-//Change Keys
+//Les clés first et last manquent de lisibilité, remplace-les par firstName et lastName
 const keys = array => {
-    const arrayKeys = []
-    array.map(user => {
-        const tmp = {}
-        tmp["firstName"] = user.first
-        tmp["lastName"] = user.last
-        tmp["year"] = user.year
-        arrayKeys.push(tmp)
-    });
+
+    const keysChanged = array.map(user => ({
+        firstName: user.first,
+        lastName: user.last,
+        year: user.year
+    }));
     console.log("Les clefs first et last modifiées:")
-    return arrayKeys;
+    return keysChanged;
 };
 console.log(keys(entrepreneurs));
 
 
-//Filter
+//Filtre dans cette liste les entrepreneurs qui sont nés dans les années 70
 const seventy = array => {
     const arraySeventy = array.filter(user => 1969 < user.year && user.year < 1980);
     console.log("Les entrepreneurs nés dans les années 70:")

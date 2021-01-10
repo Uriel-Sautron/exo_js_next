@@ -18,25 +18,34 @@ const title = array => {
     const arrayTitle = array.map(book => book.title);
     return arrayTitle;
 };
+console.log("Voici la liste des titres des livres du CDI: ")
 console.log(title(books));
-console.log(books);
+
+
 // Est-ce que tous les livres ont été empruntés au moins une fois ?
-const rented = array => array.every(book => book.rented > 0);
+const rented = array => array.every(book => book.rented > 0) ? "Oui" : "Non";
+console.log("Tous les livres ont été empruntés au moins une fois?")
+console.log(rented(books))
+
 
 // Quel est le livre le plus emprunté ?
-const moreRented = array => [...array].sort((a, b) => b.rented - a.rented)[0].title;
+function moreRented(array) {
+    return [...array].sort((a, b) => b.rented - a.rented)[0].title;
+}
+console.log(`Le livre le plus emprunté est: ${moreRented(books)}`);
 
-console.log(moreRented(books));
-console.log(books);
+
 // Quel est le livre le moins emprunté ?
 const lessRented = array => {
     array.sort((a, b) => a.rented - b.rented);
     return array[0].title;
 };
+console.log(`Le livre le moins emprunté est: ${lessRented(books)}`);
 
 // Supprime le livre avec l'ID 133712
 const del = array => {
-    let index = array.findIndex(book => book.id === 133712);
-    delete array[index];
-    return array;
+    const delBook = array.filter(book => book.id !== 133712);
+    return delBook;
 }
+console.log(`Le livre avec l'id 133712 a été retirer:`);
+console.log(del(books));
